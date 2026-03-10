@@ -129,9 +129,9 @@
         raise_layer {
             display-name = "12#?";
             bindings = <
-&trans  &kp N1     &kp N2     &kp N3     &kp N4     &kp N5                                      &mmv MOVE_UP                     &kp N6             &kp N7                &kp N8                 &kp N9         &kp N0     &trans
-&trans  &kp LG(A)  &kp LG(S)  &kp LG(D)  &kp LG(F)  &kp LEFT_BRACKET            &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &kp RIGHT_BRACKET  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp MINUS      &kp EQUAL  &trans
-&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LEFT_BRACE    &trans                    &mmv MOVE_DOWN                   &kp RIGHT_BRACE    &kp LBKT              &kp RBKT               &kp BACKSLASH  &kp PIPE   &trans
+&trans  &kp N1     &kp N2     &kp N3     &kp N4     &kp N5                                      &mmv MOVE_UP                     &kp N6             &kp N7                &kp N8                 &kp N9           &kp N0          &trans
+&trans  &kp LG(A)  &kp LG(S)  &kp LG(D)  &kp LG(F)  &kp LEFT_BRACKET            &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &kp RIGHT_BRACKET  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &mt UNDER MINUS  &mt PLUS EQUAL  &trans
+&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LEFT_BRACE    &trans                    &mmv MOVE_DOWN                   &kp RIGHT_BRACE    &kp LBKT              &kp RBKT               &kp BACKSLASH    &kp PIPE        &trans
                               &trans     &trans     &trans                                                                       &trans             &trans                &trans
             >;
 
@@ -141,10 +141,10 @@
         nav_pad_layer {
             display-name = "NavPad";
             bindings = <
-&trans  &kp C_VOLUME_UP    &kp HOME          &kp UP_ARROW       &kp END          &kp PAGE_UP                                    &mmv MOVE_UP                     &kp PLUS   &kp N7        &kp N8        &kp N9        &kp STAR   &trans
-&trans  &kp C_VOLUME_DOWN  &kp LEFT_ARROW    &kp DOWN_ARROW     &kp RIGHT_ARROW  &kp PAGE_DOWN                  &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &kp MINUS  &kp NUMBER_4  &kp N5        &kp NUMBER_6  &kp SLASH  &trans
-&trans  &kp K_MUTE         &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH    &kp PRINTSCREEN  &kp C_MUTE                    &mmv MOVE_DOWN                   &kp EQUAL  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp N0     &trans
-                                             &trans             &trans           &trans                                                                          &trans     &trans        &trans
+&trans  &kp PAGE_UP    &mkp LCLK       &kp UP_ARROW    &mkp RCLK        &kp HOME                                       &mmv MOVE_UP                     &kp PLUS         &kp N7        &kp N8        &kp N9        &kp STAR       &trans
+&trans  &kp PAGE_DOWN  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END                        &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &kp KP_SUBTRACT  &kp NUMBER_4  &kp N5        &kp NUMBER_6  &kp KP_DIVIDE  &trans
+&trans  &trans         &trans          &trans          &trans           &kp PRINTSCREEN  &kp C_MUTE                    &mmv MOVE_DOWN                   &kp N0           &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp KP_EQUAL   &trans
+                                       &trans          &trans           &trans                                                                          &trans           &trans        &trans
             >;
 
             sensor-bindings = <&scroll_encoder>;
