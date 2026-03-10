@@ -117,10 +117,10 @@
         default_layer {
             display-name = "QWERTY";
             bindings = <
-&kp TAB           &kp Q  &kp W  &kp E              &kp R      &kp T                               &kp UP                &kp Y        &kp U            &kp I                &kp O                    &kp P               &kp BSPC
-&td0              &kp A  &kp S  &kp D              &kp F      &kp G                     &kp LEFT  &kp ENTER  &kp RIGHT  &kp H        &kp J            &kp K                &kp L                    &mt COLON SEMI      &mt DOUBLE_QUOTES SQT
-&kp LEFT_CONTROL  &kp Z  &kp X  &kp C              &kp V      &kp B        &kp SPACE              &kp DOWN              &kp N        &kp M            &mt LESS_THAN COMMA  &mt GREATER_THAN PERIOD  &mt QUESTION SLASH  &kp ENTER
-                                &mt LEFT_ALT LGUI  &lt 2 TAB  &lt 1 SPACE                                               &lt 1 ENTER  &lt 2 BACKSPACE  &lt 3 DELETE
+&mt LEFT_GUI TAB  &kp Q  &kp W  &kp E         &kp R      &kp T                               &kp UP                &kp Y        &kp U            &kp I                &kp O                    &kp P               &kp BSPC
+&td0              &kp A  &kp S  &kp D         &kp F      &kp G                     &kp LEFT  &kp ENTER  &kp RIGHT  &kp H        &kp J            &kp K                &kp L                    &mt COLON SEMI      &mt DOUBLE_QUOTES SQT
+&kp LEFT_CONTROL  &kp Z  &kp X  &kp C         &kp V      &kp B        &kp SPACE              &kp DOWN              &kp N        &kp M            &mt LESS_THAN COMMA  &mt GREATER_THAN PERIOD  &mt QUESTION SLASH  &kp ENTER
+                                &kp LEFT_ALT  &lt 2 TAB  &lt 1 SPACE                                               &lt 1 ENTER  &lt 2 BACKSPACE  &lt 3 DELETE
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
@@ -165,7 +165,7 @@
         setting_layer {
             display-name = "Setting";
             bindings = <
-&sys_reset       &bootloader      &none            &none            &none            &bt BT_CLR_ALL                             &mmv MOVE_UP                     &bt BT_CLR_ALL   &none            &none            &none            &bootloader                     &sys_reset
+&sys_reset       &bootloader      &none            &studio_unlock   &none            &bt BT_CLR_ALL                             &mmv MOVE_UP                     &bt BT_CLR_ALL   &none            &studio_unlock   &none            &bootloader                     &sys_reset
 &rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &rgb_ug RGB_SPI  &rgb_ug RGB_SPD  &rgb_ug RGB_BRI  &rgb_ug RGB_BRD            &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &rgb_ug RGB_HUI  &rgb_ug RGB_HUD  &rgb_ug RGB_SAI  &rgb_ug RGB_SAD  &rgb_ug RGB_COLOR_HSB(0,0,100)  &rgb_ug RGB_TOG
 &out OUT_USB     &out OUT_BLE     &none            &bt BT_SEL 0     &bt BT_PRV       &bt BT_NXT       &trans                    &mmv MOVE_DOWN                   &bt BT_NXT       &bt BT_PRV       &bt BT_SEL 0     &none            &out OUT_BLE                    &out OUT_USB
                                                    &trans           &trans           &trans                                                                      &trans           &trans           &trans
