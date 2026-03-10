@@ -75,8 +75,8 @@ layers:
   - {t: ']', s: '}'}
   - (
   - )
-  - {t: '-', s: _}
-  - {t: '=', s: +}
+  - {t: '-', h: _, s: _}
+  - {t: '=', h: +, s: +}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: Z, h: '$$mdi:apple-keyboard-command$$'}
@@ -100,11 +100,11 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   NavPad:
   - {t: '$$mdi:transfer$$', type: trans}
-  - $$mdi:volume-high$$
-  - HOME
-  - $$mdi:arrow-up-bold$$
-  - END
   - PgUp
+  - $$mdi:mouse-left-click-outline$$
+  - $$mdi:arrow-up-bold$$
+  - $$mdi:mouse-right-click-outline$$
+  - HOME
   - {t: '$$mdi:menu-up$$', s: '$$mdi:mouse$$'}
   - +
   - {t: '7', s: '&'}
@@ -113,33 +113,33 @@ layers:
   - '*'
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - $$mdi:volume-low$$
+  - PgDn
   - $$mdi:arrow-left-bold$$
   - $$mdi:arrow-down-bold$$
   - $$mdi:arrow-right-bold$$
-  - PgDn
+  - END
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
   - $$mdi:mouse-left-click-outline$$
   - {t: '$$mdi:menu-right$$', s: '$$mdi:mouse$$'}
-  - {t: '-', s: _}
+  - KP SUBTRACT
   - '4'
   - {t: '5', s: '%'}
   - '6'
-  - {t: /, s: '?'}
+  - KP DIVIDE
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - MUTE
-  - {t: '[', s: '{'}
-  - {t: ']', s: '}'}
-  - {t: \, s: '|'}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
   - PRINTSCREEN
   - $$mdi:volume-off$$
   - {t: '$$mdi:menu-down$$', s: '$$mdi:mouse$$'}
-  - {t: '=', s: +}
+  - {t: '0', s: )}
   - '1'
   - '2'
   - '3'
-  - {t: '0', s: )}
+  - KP EQUAL
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {type: held}
