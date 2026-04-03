@@ -13,7 +13,7 @@ layers:
   - I
   - O
   - P
-  - {t: '$$mdi:backspace-reverse-outline$$', h: '$$mdi:backspace$$'}
+  - {t: '$$mdi:backspace$$', type: backspace}
   - '&td0'
   - A
   - S
@@ -21,7 +21,7 @@ layers:
   - F
   - G
   - $$mdi:arrow-left-bold$$
-  - {t: '$$mdi:keyboard-return$$', type: enter}
+  - $$mdi:apple-keyboard-command$$
   - $$mdi:arrow-right-bold$$
   - H
   - J
@@ -35,20 +35,20 @@ layers:
   - C
   - V
   - B
-  - $$mdi:keyboard-space$$
+  - $$mdi:keyboard-tab$$
   - $$mdi:arrow-down-bold$$
   - N
   - M
   - {t: ',', h: <, s: <}
   - {t: ., h: '>'}
   - {t: /, h: '?', s: '?'}
-  - {t: '$$mdi:keyboard-return$$', type: enter}
+  - {t: Mouse&Fn, h: toggle}
   - $$mdi:apple-keyboard-option$$
-  - {t: '$$mdi:keyboard-tab$$', h: NavPad}
-  - {t: '$$mdi:keyboard-space$$', h: '12#?'}
+  - {t: '$$mdi:keyboard-space$$', h: NavPad}
+  - {t: '$$mdi:keyboard-tab$$', h: '12#?'}
   - {t: '$$mdi:keyboard-return$$', h: '12#?'}
   - {t: '$$mdi:backspace$$', h: NavPad}
-  - {t: Mouse&Fn, h: toggle}
+  - $$mdi:backspace-reverse-outline$$
   12#?:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '1', h: '!'}
@@ -56,7 +56,7 @@ layers:
   - {t: '3', h: '#'}
   - {t: '4', h: $}
   - {t: '5', h: '%', s: '%'}
-  - {t: '$$mdi:menu-up$$', s: '$$mdi:mouse$$'}
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '6', h: ^}
   - {t: '7', h: '&', s: '&'}
   - {t: '8', h: '*', s: '*'}
@@ -64,33 +64,33 @@ layers:
   - {t: '0', h: ), s: )}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: A, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: S, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: D, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: F, h: '$$mdi:apple-keyboard-command$$'}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
-  - $$mdi:mouse-left-click-outline$$
-  - {t: '$$mdi:menu-right$$', s: '$$mdi:mouse$$'}
   - {t: '$$mdi:transfer$$', type: trans}
-  - (
-  - )
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '-', h: _, s: _}
   - {t: '=', h: +, s: +}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: Z, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: X, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: C, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: V, h: '$$mdi:apple-keyboard-command$$'}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:menu-down$$', s: '$$mdi:mouse$$'}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '[', h: '{', s: '{'}
   - {t: ']', h: '}', s: '}'}
-  - {t: \, s: '|'}
-  - '|'
+  - {t: \, h: '|', s: '|'}
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -105,7 +105,7 @@ layers:
   - $$mdi:arrow-up-bold$$
   - END
   - PgUp
-  - {t: '$$mdi:menu-up$$', s: '$$mdi:mouse$$'}
+  - {t: '$$mdi:transfer$$', type: trans}
   - +
   - {t: '7', s: '&'}
   - {t: '8', s: '*'}
@@ -118,9 +118,9 @@ layers:
   - $$mdi:arrow-down-bold$$
   - $$mdi:arrow-right-bold$$
   - PgDn
-  - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
-  - $$mdi:mouse-left-click-outline$$
-  - {t: '$$mdi:menu-right$$', s: '$$mdi:mouse$$'}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '-', s: _}
   - '4'
   - {t: '5', s: '%'}
@@ -134,7 +134,7 @@ layers:
   - '&mkp MB5'
   - PRINTSCREEN
   - $$mdi:volume-off$$
-  - {t: '$$mdi:menu-down$$', s: '$$mdi:mouse$$'}
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '0', s: )}
   - '1'
   - '2'
