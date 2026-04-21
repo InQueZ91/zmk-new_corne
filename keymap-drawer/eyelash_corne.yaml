@@ -42,7 +42,7 @@ layers:
   - {t: ',', h: <, s: <}
   - {t: ., h: '>'}
   - {t: /, h: '?', s: '?'}
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:transfer$$', type: trans}
   - 12#?
   - $$mdi:keyboard-space$$
   - $$mdi:keyboard-tab$$
@@ -106,11 +106,11 @@ layers:
   - END
   - PgUp
   - {t: '$$mdi:transfer$$', type: trans}
-  - +
+  - {t: '*', h: /}
   - {t: '7', s: '&'}
   - {t: '8', s: '*'}
   - {t: '9', s: (}
-  - '*'
+  - {t: '*', h: /}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:apple-keyboard-shift$$
@@ -121,11 +121,11 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '-', s: _}
+  - {t: +, h: '-'}
   - '4'
   - {t: '5', s: '%'}
   - '6'
-  - {t: /, s: '?'}
+  - {t: +, h: '-'}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:apple-keyboard-control$$
@@ -139,7 +139,7 @@ layers:
   - '1'
   - '2'
   - '3'
-  - {t: '=', s: +}
+  - {t: ., s: '>'}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {type: held}
