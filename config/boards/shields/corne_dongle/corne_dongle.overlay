@@ -123,7 +123,11 @@
          * 80 rows tall with ~26 rows of garbage above / ~22 below, inverted
          * colours (black background), and text sheared one pixel per row
          * (x-offset 1 pushed the window past the last column).
-         * Values below are from Zephyr's st7735r_ada_160x128 shield.
+         *
+         * Second test (Adafruit 160x128 power/gamma values, inversion off):
+         * whole panel plain white, no text. So power/gamma/frame values are
+         * back to the Longan Nano set, which visibly drove this glass in the
+         * first test; only geometry and inversion differ from that test.
          * madctl / rgb-is-inverted kept: orientation was already correct.
          */
         width = <160>;
@@ -136,17 +140,18 @@
 
         caset = [00 00 00 9f];
         raset = [00 00 00 7f];
+        pwctr1 = [62 02 04];
+        pwctr2 = [c0];
+        pwctr3 = [0d 00];
+        pwctr4 = [8d 6a];
+        pwctr5 = [8d ee];
+        invctr = <0x03>;
+        frmctr1 = [05 3a 3a];
+        frmctr2 = [05 3a 3a];
+        frmctr3 = [05 3a 3a 05 3a 3a];
         vmctr1 = <0x0e>;
-        pwctr1 = [a2 02 84];
-        pwctr2 = [c5];
-        pwctr3 = [0a 00];
-        pwctr4 = [8a 2a];
-        pwctr5 = [8a ee];
-        frmctr1 = [01 2c 2d];
-        frmctr2 = [01 2c 2d];
-        frmctr3 = [01 2c 2d 01 2c 2d];
-        gamctrp1 = [02 1c 07 12 37 32 29 2d 29 25 2b 39 00 01 03 10];
-        gamctrn1 = [03 1d 07 06 2e 2c 29 2d 2e 2e 37 3f 00 00 02 10];
+        gamctrp1 = [10 0e 02 03 0e 07 02 07 0a 12 27 37 00 0d 0e 10];
+        gamctrn1 = [10 0e 03 03 0f 06 02 08 0a 13 26 36 00 0d 0e 10];
     };
 };
 
