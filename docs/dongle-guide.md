@@ -25,7 +25,8 @@ Written for future me. Branch: `dongle`. The old standalone setup is the tag `pr
 | `config/boards/shields/corne_dongle/` | Dongle shield: `.overlay` (pins, display), `.conf` (settings), layout |
 | `src/dongle_screen/` | Screen code: `status_screen.c`, `halves.c` (battery), `output.c` (USB/BT), `layer.c`, `cat.c` (typing cat), `reset_reason.c` |
 | `src/dongle_screen/cat_frames.c` | **Generated** cat pictures. Do not edit by hand |
-| `scripts/make_typing_cat.py` | Draws the cat and writes `cat_frames.c` |
+| `cat/base.png` | The hand-drawn character (160x84, both hands down). Source of all 5 poses |
+| `scripts/make_cat_frames.py` | Builds the 5 poses from `cat/base.png` and writes `cat_frames.c` |
 | `Kconfig`, `CMakeLists.txt`, `zephyr/module.yml` | Make the repo load as a Zephyr module so the screen code compiles for the dongle only |
 | `build.yaml` | Which firmware files get built |
 | `keymap-drawer/` | Auto-drawn picture of the keymap (a bot commits it after each push) |
@@ -88,7 +89,7 @@ Skipping the reset on any one of the three can leave a stale pairing and the hal
 - **Half indicator:** green above 50%, amber above 20%, red below. Grey with `--` means that half is disconnected. While a half is charging it reads 100% (voltage-based estimate, hardware limit).
 - **L/R mapping:** ZMK numbers the halves by connection order. The screen learns which is left from the first key press after boot, so right after power-on it may be swapped for a moment.
 - **Layer colours:** QWERTY blue, Game red, 12#? green, NavPad amber, Mouse&Fn purple, Setting white. Names come from `display-name` in the keymap.
-- **Typing cat:** left-half key taps the left paw, right-half key the right paw, both halves both paws. Sleeps after 30 s idle.
+- **Typing character:** a key on the left half keeps the left hand down (right lifted), the right half the opposite, both halves both hands down, nothing pressed lifts both. Eyes close and a `z` appears after 30 s idle.
 - **Restart reason** (shown for 60 s after boot):
   - `Power on` (grey): plugged in, or a power dip.
   - `Restart: software` (amber): a crash, `&sys_reset`, or just after flashing.
@@ -121,21 +122,27 @@ The halves can't switch at runtime; it takes a reflash:
 
 To return to the dongle, do the "re-pair everything" steps in section 5.
 
-## 8. Replacing the cat pictures
+## 8. Changing the character
 
-**Today** the cat is drawn by code (`scripts/make_typing_cat.py`). To change it, edit the script, run `python scripts/make_typing_cat.py --preview out.png`, look at the preview, then commit `cat_frames.c` and push.
+The picture is `cat/base.png`: 160x84, transparent background, the "both hands down" pose. `scripts/make_cat_frames.py` derives the other four poses from it:
 
-**Planned, not built yet:** a build-time converter so you can drop your own PNGs into a `cat/` folder. The design that was agreed:
-
-| File | Shown when |
+| Frame | How it is made |
 |---|---|
-| `idle.png` | waiting |
-| `left.png` | left-half key held |
-| `right.png` | right-half key held |
-| `both.png` | both halves (could fall back to `left`) |
-| `sleep.png` | 30 s without typing (could fall back to `idle`) |
+| both | `base.png` as is |
+| left / right | one hand (left or right half of the picture) lifted 5 px |
+| idle | both hands lifted |
+| sleep | eyes closed (eye rows/columns set in the script) + a small `z` |
 
-PNG, exactly 160x84, 256 colours at most, no transparency, solid dark background, character in the same spot in every frame. The build would fail with a clear message for a wrong size, too many colours or transparency. Ask for this to be built when you want it.
+To change it: edit or replace `cat/base.png` (keep 160x84), then
+
+```bash
+python -m pip install pillow
+python scripts/make_cat_frames.py --preview preview.png
+```
+
+Look at `preview.png`, then commit `cat/` and `src/dongle_screen/cat_frames.c` and push. Only the dongle needs flashing.
+
+Limits: the firmware format allows 16 colours; the script folds the art down to 15 plus the screen background automatically (the rarest colour merges into its nearest neighbour). If you redraw the character, the hand rows (`HAND_TOP`, `SPLIT`) and eye position (`EYES`, `EYE_ROWS`) at the top of the script must match your art. To draw all five poses by hand instead, the script's `frames()` function is the only place to change.
 
 ## 9. Troubleshooting
 
