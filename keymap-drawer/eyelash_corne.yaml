@@ -1,6 +1,6 @@
 layout: {zmk_keyboard: eyelash_corne}
 layers:
-  QWERTY:
+  Qwerty:
   - $$mdi:keyboard-esc$$
   - Q
   - W
@@ -21,7 +21,7 @@ layers:
   - F
   - G
   - $$mdi:arrow-left-bold$$
-  - {t: Game, h: toggle}
+  - {t: Gaming, h: toggle}
   - $$mdi:arrow-right-bold$$
   - H
   - J
@@ -49,7 +49,7 @@ layers:
   - {t: '$$mdi:keyboard-return$$', h: '12#?'}
   - {t: '$$mdi:backspace$$', h: NavPad}
   - $$mdi:backspace-reverse-outline$$
-  Game:
+  Gaming:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -70,7 +70,7 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: QWERTY, h: toggle}
+  - {t: Qwerty, h: toggle}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -155,11 +155,11 @@ layers:
   - END
   - PgUp
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '*', h: /}
-  - {t: '7', s: '&'}
-  - {t: '8', s: '*'}
-  - {t: '9', s: (}
-  - {t: '*', h: /}
+  - KP SUBTRACT
+  - KP 7
+  - KP 8
+  - KP 9
+  - KP NUMLOCK
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:apple-keyboard-shift$$
@@ -170,11 +170,11 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: +, h: '-'}
-  - '4'
-  - {t: '5', s: '%'}
-  - '6'
-  - {t: +, h: '-'}
+  - KP PLUS
+  - KP 4
+  - KP 5
+  - KP 6
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:apple-keyboard-control$$
@@ -184,11 +184,11 @@ layers:
   - PRINTSCREEN
   - $$mdi:volume-off$$
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '0', s: )}
-  - '1'
-  - '2'
-  - '3'
-  - {t: ., s: '>'}
+  - KP 0
+  - KP 1
+  - KP 2
+  - KP 3
+  - KP DOT
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {type: held}
