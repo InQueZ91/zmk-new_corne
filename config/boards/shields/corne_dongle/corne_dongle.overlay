@@ -39,4 +39,27 @@
         rows = <5>;
         events = <0>;
     };
+
+    /*
+     * Placeholder encoder. The real EC11 is on the left half; its rotation is
+     * sent to the dongle as sensor index 0. ZMK sizes its per-sensor state from
+     * the central's zmk,keymap-sensors node, so without one the dongle has zero
+     * slots and the left encoder would write out of bounds.
+     * P1.04 / P1.06 are free nice!nano pins (not used by the planned display
+     * wiring); nothing is connected, so the pull-ups keep it idle.
+     * steps / triggers-per-rotation match boards/arm/eyelash_corne.
+     */
+    dongle_encoder: dongle_encoder {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio1 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <40>;
+        status = "okay";
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        triggers-per-rotation = <20>;
+        sensors = <&dongle_encoder>;
+    };
 };
