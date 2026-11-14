@@ -135,6 +135,7 @@
         };
 
         game_layer {
+            display-name = "Game";
             bindings = <
 &trans          &trans  &trans  &trans        &trans     &trans                     &trans          &trans  &trans  &trans  &trans  &trans  &trans
 &kp LEFT_SHIFT  &trans  &trans  &trans        &trans     &trans             &trans  &to 0   &trans  &trans  &trans  &trans  &trans  &trans  &trans
