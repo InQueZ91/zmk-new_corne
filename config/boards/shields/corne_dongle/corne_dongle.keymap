@@ -1,0 +1,5 @@
+/*
+ * The dongle uses the SAME keymap as the halves: one file to maintain.
+ * (relative to this file: config/boards/shields/corne_dongle -> config/)
+ */
+#include "../../../eyelash_corne.keymap"
