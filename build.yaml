@@ -7,10 +7,12 @@ include:
   - board: nice_nano_v2
     shield: corne_dongle
     artifact-name: corne_dongle
-  # Same dongle firmware with USB serial logging, for debugging the display
+  # Same dongle firmware with USB serial logging, for debugging only.
+  # Debug level is needed: ZMK logs "Disconnected: <addr> (reason N)" at DBG.
   - board: nice_nano_v2
     shield: corne_dongle
     snippet: zmk-usb-logging
+    cmake-args: -DCONFIG_ZMK_LOG_LEVEL_DBG=y
     artifact-name: corne_dongle_logging
   - board: eyelash_corne_left
     shield: nice_view
