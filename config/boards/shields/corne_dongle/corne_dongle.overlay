@@ -66,7 +66,7 @@
 
 /*
  * ---------------------------------------------------------------------------
- * 0.96" ST7735S 160x80 SPI LCD
+ * ST7735 SPI LCD, 160x128 (hardware test showed 128 rows, not the planned 0.96" 160x80)
  *
  * Wiring (nice!nano v2):
  *   SCK  P1.13   MOSI P1.11   CS  P0.20
@@ -76,8 +76,8 @@
  * Uses SPIM2 with its own pinctrl. The board's spi1/i2c0 (which also use
  * P1.13 / P1.11 / P0.17 / P0.20) stay disabled.
  *
- * Panel init values are from Zephyr's Sipeed Longan Nano board, which has
- * this same 0.96" 160x80 ST7735S panel. Tune on hardware if needed:
+ * Panel init values: see the comment in the st7735 node below.
+ * Tune on hardware if needed:
  *   - wrong position / garbage edge  -> x-offset / y-offset (and caset/raset)
  *   - mirrored / rotated             -> madctl
  *   - red and blue swapped           -> rgb-is-inverted
@@ -117,29 +117,36 @@
         cmd-data-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
         reset-gpios = <&gpio0 22 GPIO_ACTIVE_LOW>;
 
+        /*
+         * The panel turned out to be a 160x128 ST7735 (1.8"-class), not the
+         * 0.96" 160x80. First hardware test with 160x80 values showed: image
+         * 80 rows tall with ~26 rows of garbage above / ~22 below, inverted
+         * colours (black background), and text sheared one pixel per row
+         * (x-offset 1 pushed the window past the last column).
+         * Values below are from Zephyr's st7735r_ada_160x128 shield.
+         * madctl / rgb-is-inverted kept: orientation was already correct.
+         */
         width = <160>;
-        height = <80>;
-        x-offset = <1>;
-        y-offset = <26>;
+        height = <128>;
+        x-offset = <0>;
+        y-offset = <0>;
         madctl = <0x78>;
         colmod = <0x05>;
-        inversion-on;
         rgb-is-inverted;
 
-        caset = [00 01 00 a0];
-        raset = [00 1a 00 69];
-        pwctr1 = [62 02 04];
-        pwctr2 = [c0];
-        pwctr3 = [0d 00];
-        pwctr4 = [8d 6a];
-        pwctr5 = [8d ee];
-        invctr = <0x03>;
-        frmctr1 = [05 3a 3a];
-        frmctr2 = [05 3a 3a];
-        frmctr3 = [05 3a 3a 05 3a 3a];
+        caset = [00 00 00 9f];
+        raset = [00 00 00 7f];
         vmctr1 = <0x0e>;
-        gamctrp1 = [10 0e 02 03 0e 07 02 07 0a 12 27 37 00 0d 0e 10];
-        gamctrn1 = [10 0e 03 03 0f 06 02 08 0a 13 26 36 00 0d 0e 10];
+        pwctr1 = [a2 02 84];
+        pwctr2 = [c5];
+        pwctr3 = [0a 00];
+        pwctr4 = [8a 2a];
+        pwctr5 = [8a ee];
+        frmctr1 = [01 2c 2d];
+        frmctr2 = [01 2c 2d];
+        frmctr3 = [01 2c 2d 01 2c 2d];
+        gamctrp1 = [02 1c 07 12 37 32 29 2d 29 25 2b 39 00 01 03 10];
+        gamctrn1 = [03 1d 07 06 2e 2c 29 2d 2e 2e 37 3f 00 00 02 10];
     };
 };
 
