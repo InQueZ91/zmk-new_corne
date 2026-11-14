@@ -38,7 +38,7 @@ static void output_update_cb(struct output_state s) {
     if (output_label == NULL) {
         return;
     }
-    char text[12];
+    char text[16]; /* 3-byte UTF-8 symbol + up to 11 digits + NUL */
     uint32_t color;
 
     if (s.transport == ZMK_TRANSPORT_USB) {
