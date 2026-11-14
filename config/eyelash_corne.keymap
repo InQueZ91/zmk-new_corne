@@ -123,7 +123,7 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            display-name = "QWERTY";
+            display-name = "Qwerty";
             bindings = <
 &kp ESCAPE        &kp Q  &kp W  &kp E         &kp R        &kp T                                &kp UP               &kp Y        &kp U            &kp I                &kp O                    &kp P               &kp GRAVE
 &td0              &kp A  &kp S  &kp D         &kp F        &kp G                      &kp LEFT  &to 1     &kp RIGHT  &kp H        &kp J            &kp K                &kp L                    &mt COLON SEMI      &mt DOUBLE_QUOTES SQT
@@ -135,7 +135,7 @@
         };
 
         game_layer {
-            display-name = "Game";
+            display-name = "Gaming";
             bindings = <
 &trans          &trans  &trans  &trans        &trans     &trans                     &trans          &trans  &trans  &trans  &trans  &trans  &trans
 &kp LEFT_SHIFT  &trans  &trans  &trans        &trans     &trans             &trans  &to 0   &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -159,10 +159,10 @@
         nav_pad_layer {
             display-name = "NavPad";
             bindings = <
-&trans  &trans          &kp HOME        &kp UP_ARROW    &kp END          &kp PAGE_UP                            &trans          &mt SLASH STAR  &kp N7        &kp N8        &kp N9        &mt SLASH STAR  &trans
-&trans  &kp LEFT_SHIFT  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp PAGE_DOWN                  &trans  &trans  &trans  &mt MINUS PLUS  &kp NUMBER_4  &kp N5        &kp NUMBER_6  &mt MINUS PLUS  &trans
-&trans  &kp LCTRL       &kp LEFT_ALT    &mkp MB4        &mkp MB5         &kp PRINTSCREEN  &kp C_MUTE            &trans          &kp N0          &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp DOT         &trans
-                                        &trans          &trans           &trans                                                 &trans          &trans        &trans
+&trans  &trans          &kp HOME        &kp UP_ARROW    &kp END          &kp PAGE_UP                            &trans          &kp KP_SUBTRACT  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp KP_NUMLOCK  &trans
+&trans  &kp LEFT_SHIFT  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp PAGE_DOWN                  &trans  &trans  &trans  &kp KP_PLUS      &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &trans          &trans
+&trans  &kp LCTRL       &kp LEFT_ALT    &mkp MB4        &mkp MB5         &kp PRINTSCREEN  &kp C_MUTE            &trans          &kp KP_NUMBER_0  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp KP_DOT      &trans
+                                        &trans          &trans           &trans                                                 &trans           &trans           &trans
             >;
 
             sensor-bindings = <&scroll_encoder>;
