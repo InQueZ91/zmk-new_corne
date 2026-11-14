@@ -1,0 +1,160 @@
+# Corne dongle guide
+
+How this keyboard is set up, how to change things, and how to fix it when it breaks.
+Written for future me. Branch: `dongle`. The old standalone setup is the tag `pre-dongle` (branch `main`).
+
+## 1. How it works
+
+```
+ left half  ──BLE──┐
+                   ├──►  dongle (nice!nano v2)  ──USB──►  PC
+ right half ──BLE──┘     BLE central + USB keyboard
+                         160x128 colour screen (ST7735)
+```
+
+- **Dongle:** the only "central". It talks USB to the PC and Bluetooth to both halves. Always plugged in, never sleeps.
+- **Halves:** peripheral-only. They only work with the dongle (see section 7 to go back to standalone).
+- **Keymap:** lives only in the repo, in `config/eyelash_corne.keymap`. ZMK Studio is removed, so nothing stored on the device can override it.
+- **Firmware:** built by GitHub Actions on every push (`build.yaml`). Nothing is built locally.
+
+## 2. Repo map
+
+| Path | What it is |
+|---|---|
+| `config/eyelash_corne.keymap` | The keymap (shared by halves and dongle) |
+| `config/boards/shields/corne_dongle/` | Dongle shield: `.overlay` (pins, display), `.conf` (settings), layout |
+| `src/dongle_screen/` | Screen code: `status_screen.c`, `halves.c` (battery), `output.c` (USB/BT), `layer.c`, `cat.c` (typing cat), `reset_reason.c` |
+| `src/dongle_screen/cat_frames.c` | **Generated** cat pictures. Do not edit by hand |
+| `scripts/make_typing_cat.py` | Draws the cat and writes `cat_frames.c` |
+| `Kconfig`, `CMakeLists.txt`, `zephyr/module.yml` | Make the repo load as a Zephyr module so the screen code compiles for the dongle only |
+| `build.yaml` | Which firmware files get built |
+| `keymap-drawer/` | Auto-drawn picture of the keymap (a bot commits it after each push) |
+
+## 3. Changing the keymap
+
+1. Open the [Keymap Editor](https://nickcoutsos.github.io/keymap-editor/). Its GitHub integration is being shut down (maybe end of 2026), so use the **FileSystem** source in Chrome or Edge and pick the local repo folder. Edit `config/eyelash_corne.keymap`.
+2. `git pull` first, because the keymap-drawer bot pushes commits too.
+3. Commit and push.
+4. Wait for the build (about 2 minutes), download the firmware, flash **only the dongle**. Keymap changes never need a flash of the halves.
+
+Combos, macros and hold-tap timing are edited in the keymap file itself.
+
+## 4. Getting the firmware
+
+Go to the repo's **Actions** tab, open the latest "Build ZMK firmware" run, and download the artifact. Or:
+
+```bash
+gh run list --branch dongle --limit 3
+gh run download <run-id> -n firmware -D firmware
+```
+
+| File | Flash to |
+|---|---|
+| `corne_dongle.uf2` | dongle (daily use) |
+| `corne_dongle_logging.uf2` | dongle, only for debugging (needs a serial terminal) |
+| `eyelash_corne_left.uf2` | left half |
+| `eyelash_corne_right.uf2` | right half |
+| `settings_reset_nice_nano_v2.uf2` | dongle, to wipe Bluetooth pairings |
+| `settings_reset_eyelash_corne.uf2` | either half, to wipe pairings (built for the left board; assumed to work on the right, unverified) |
+
+## 5. Flashing
+
+**Bootloader mode:** double-tap the reset button on the board. A USB drive (e.g. `NICENANO`) appears. Drag the `.uf2` onto it; the board reboots by itself. No pins to short.
+
+**Normal update (keymap or screen change):** flash the dongle only.
+
+**Re-pair everything (halves and dongle stop talking, both halves show `--`):**
+1. Flash `settings_reset` on the **dongle**, the **left half** and the **right half**.
+2. Flash `corne_dongle.uf2` on the dongle.
+3. Flash the left and right half firmware.
+4. Power everything on; both halves should connect within a few seconds.
+
+Skipping the reset on any one of the three can leave a stale pairing and the halves won't reconnect.
+
+## 6. The screen
+
+```
+┌──────────────────────────────────────┐
+│ USB    L [▓▓▓ ] 78    R [▓▓▓▓] 92    │  output + battery/connection per half
+├──────────────────────────────────────┤
+│  restart reason (first 60 s)         │
+│              typing cat              │  160x84
+├══════════════════════════════════════┤
+│               QWERTY                 │  layer name, coloured per layer
+└──────────────────────────────────────┘
+```
+
+- **Output icon:** USB is white when the PC has the keyboard, grey if only powered. Bluetooth shows the profile number.
+- **Half indicator:** green above 50%, amber above 20%, red below. Grey with `--` means that half is disconnected. While a half is charging it reads 100% (voltage-based estimate, hardware limit).
+- **L/R mapping:** ZMK numbers the halves by connection order. The screen learns which is left from the first key press after boot, so right after power-on it may be swapped for a moment.
+- **Layer colours:** QWERTY blue, Game red, 12#? green, NavPad amber, Mouse&Fn purple, Setting white. Names come from `display-name` in the keymap.
+- **Typing cat:** left-half key taps the left paw, right-half key the right paw, both halves both paws. Sleeps after 30 s idle.
+- **Restart reason** (shown for 60 s after boot):
+  - `Power on` (grey): plugged in, or a power dip.
+  - `Restart: software` (amber): a crash, `&sys_reset`, or just after flashing.
+  - `Restart: lockup` / `watchdog` (red): hard crash.
+  - `Restart: button`: reset pin.
+  - Unverified: the bootloader might clear the reset record before the firmware reads it. If every restart says `Power on`, use the logging build instead.
+
+### Display wiring (ST7735, 128x160, SPI)
+
+Pins as written in `corne_dongle.overlay` (nRF GPIO numbers, not the silkscreen labels on the nice!nano; match them to the board's pinout before rewiring):
+
+| Display pin | nRF pin |
+|---|---|
+| SCK | P1.13 |
+| SDA / MOSI | P1.11 |
+| CS | P0.20 |
+| DC (A0) | P0.17 |
+| RESET | P0.22 |
+| BLK (backlight) | P0.24 (driven directly, always on) |
+| VCC / GND | 3.3 V / GND |
+
+Panel settings that matter (all in the overlay, hard-won): height 128, x/y offset 0, `rgb-is-inverted` set, no `inversion-on`, power/gamma values from the Longan Nano. The Adafruit values gave a blank white screen.
+
+## 7. Going back to standalone (no dongle)
+
+The halves can't switch at runtime; it takes a reflash:
+1. Flash `settings_reset` on both halves.
+2. Flash the firmware from the `pre-dongle` tag (left half is the central there).
+3. Re-pair with the PC.
+
+To return to the dongle, do the "re-pair everything" steps in section 5.
+
+## 8. Replacing the cat pictures
+
+**Today** the cat is drawn by code (`scripts/make_typing_cat.py`). To change it, edit the script, run `python scripts/make_typing_cat.py --preview out.png`, look at the preview, then commit `cat_frames.c` and push.
+
+**Planned, not built yet:** a build-time converter so you can drop your own PNGs into a `cat/` folder. The design that was agreed:
+
+| File | Shown when |
+|---|---|
+| `idle.png` | waiting |
+| `left.png` | left-half key held |
+| `right.png` | right-half key held |
+| `both.png` | both halves (could fall back to `left`) |
+| `sleep.png` | 30 s without typing (could fall back to `idle`) |
+
+PNG, exactly 160x84, 256 colours at most, no transparency, solid dark background, character in the same spot in every frame. The build would fail with a clear message for a wrong size, too many colours or transparency. Ask for this to be built when you want it.
+
+## 9. Troubleshooting
+
+| Symptom | Likely cause / fix |
+|---|---|
+| Both halves show `--` but the dongle is fine | Stale pairing. Do the full re-pair (section 5) |
+| Screen goes white, halves drop at the same time | Was a work-queue stall; the display now has its own thread and bigger stacks. If it returns, flash the logging build and read the serial output |
+| Dongle restarts by itself | Read the restart reason on screen within 60 s. Try a USB 2.0 port or an extension cable (USB 3.0 interference was a suspect). Not yet root-caused |
+| Screen blank white | Wrong panel settings (see section 6), or the display isn't powered/wired |
+| Colours look wrong (red and blue swapped) | Byte-order/colour setting in `corne_dongle.conf` (`LV_COLOR_16_SWAP`); not seen so far |
+| Repo keymap change doesn't show after flashing | Only possible if something is saved on the device. Flash `settings_reset` on the dongle, then the firmware |
+| No Studio | Removed on purpose; edit the keymap in the repo |
+
+**Debugging a disconnect:** flash `corne_dongle_logging.uf2`, open its USB serial port in a terminal at the moment of the problem. It is built at debug level because ZMK only prints the Bluetooth disconnect reason at that level. Go back to `corne_dongle.uf2` afterwards.
+
+## 10. Open items
+
+- Dongle self-restarts: cause unknown.
+- Backlight dimming / idle-off: not done. BLK is driven straight from a GPIO; a transistor is advisable for dimming.
+- SD card on the display board (to change pictures without flashing): idea only, nothing built. Needs 2 extra wires and is the riskiest part.
+- Optional: Caps Lock indicator on the screen (ZMK v0.3.0 supports HID indicators).
+- Versions: ZMK v0.3.0, Zephyr 3.5. Board names use the old style (`nice_nano_v2`).
