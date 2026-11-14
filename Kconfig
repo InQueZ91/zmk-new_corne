@@ -1,0 +1,11 @@
+# Custom 160x128 colour status screen for the corne_dongle (ST7735).
+# Enabled from config/boards/shields/corne_dongle/corne_dongle.conf.
+
+config CORNE_DONGLE_SCREEN
+    bool "corne_dongle 160x128 colour status screen"
+    depends on ZMK_DISPLAY && ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    depends on ZMK_SPLIT_ROLE_CENTRAL && ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
+    select LV_USE_LABEL
+    select LV_FONT_MONTSERRAT_12
+    select LV_FONT_MONTSERRAT_14
+    select LV_FONT_MONTSERRAT_20
