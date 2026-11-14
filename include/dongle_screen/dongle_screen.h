@@ -5,7 +5,7 @@
  *   | USB      L [###] 78     R [###] 92   |  top bar: output + both halves
  *   +--------------------------------------+  y = TOP_H
  *   |                                      |
- *   |            middle strip              |  reserved for the GIF (160x84)
+ *   |            middle strip              |  typing cat (160x84) + restart reason
  *   |                                      |
  *   +--------------------------------------+  y = TOP_H + MID_H
  *   | ==== layer colour stripe ==========  |
@@ -51,6 +51,21 @@ static inline lv_obj_t *dongle_label(lv_obj_t *parent, const lv_font_t *font, ui
     return l;
 }
 
+/*
+ * Bit n set = key position n is on the LEFT half (48 positions). Derived from
+ * default_transform in corne_dongle.overlay: columns 0-6 are the left half,
+ * columns 7-13 the right half (right half uses col-offset 7).
+ * Left positions: 0-5, 13-18, 28-34, 42-44.
+ */
+#define DONGLE_LEFT_POSITIONS 0x1c07f007e03fULL
+#define DONGLE_POSITION_COUNT 48
+
+static inline bool dongle_position_is_left(uint32_t position) {
+    return position < DONGLE_POSITION_COUNT && ((DONGLE_LEFT_POSITIONS >> position) & 1ULL);
+}
+
 void dongle_output_init(lv_obj_t *top_bar);
 void dongle_halves_init(lv_obj_t *top_bar);
 void dongle_layer_init(lv_obj_t *bottom_bar);
+void dongle_cat_init(lv_obj_t *middle);
+void dongle_reset_reason_init(lv_obj_t *middle);

@@ -12,6 +12,7 @@
  * not by side. Every key press carries its slot (event->source) and its key
  * position; positions on the left half are listed in LEFT_POSITIONS. The first key
  * press after boot fixes the mapping. Until then slot 0 is shown as L (a guess).
+ * Positions on the left half: DONGLE_LEFT_POSITIONS in dongle_screen.h.
  */
 #include <stdio.h>
 #include <string.h>
@@ -27,15 +28,6 @@
 #define HALVES 2
 #define SIDE_LEFT 0
 #define SIDE_RIGHT 1
-
-/*
- * Bit n set = key position n is on the LEFT half (48 positions). Derived from
- * default_transform in corne_dongle.overlay: columns 0-6 are the left half,
- * columns 7-13 the right half (right half uses col-offset 7).
- * Left positions: 0-5, 13-18, 28-34, 42-44.
- */
-#define LEFT_POSITIONS 0x1c07f007e03fULL
-#define POSITION_COUNT 48
 
 /* side_of_slot[slot] = SIDE_LEFT / SIDE_RIGHT. Written from the event thread,
  * read on the display queue; single bytes, so no tearing. */
@@ -122,11 +114,12 @@ ZMK_SUBSCRIPTION(w_halves, zmk_peripheral_battery_state_changed);
 static int side_listener_cb(const zmk_event_t *eh) {
     const struct zmk_position_state_changed *ev = as_zmk_position_state_changed(eh);
 
-    if (ev == NULL || !ev->state || ev->source >= HALVES || ev->position >= POSITION_COUNT) {
+    if (ev == NULL || !ev->state || ev->source >= HALVES ||
+        ev->position >= DONGLE_POSITION_COUNT) {
         return ZMK_EV_EVENT_BUBBLE;
     }
 
-    uint8_t side = ((LEFT_POSITIONS >> ev->position) & 1ULL) ? SIDE_LEFT : SIDE_RIGHT;
+    uint8_t side = dongle_position_is_left(ev->position) ? SIDE_LEFT : SIDE_RIGHT;
     if (side_of_slot[ev->source] != side) {
         side_of_slot[ev->source] = side;
         side_of_slot[1 - ev->source] = 1 - side;

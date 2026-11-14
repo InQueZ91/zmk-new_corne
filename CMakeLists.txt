@@ -10,5 +10,8 @@ if(CONFIG_CORNE_DONGLE_SCREEN)
     src/dongle_screen/halves.c
     src/dongle_screen/output.c
     src/dongle_screen/layer.c
+    src/dongle_screen/cat.c
+    src/dongle_screen/cat_frames.c
+    src/dongle_screen/reset_reason.c
   )
 endif()

@@ -18,11 +18,10 @@ lv_obj_t *zmk_display_status_screen(void) {
     dongle_output_init(top);
     dongle_halves_init(top);
 
-    /* Middle strip: reserved for the GIF. For now just the keyboard name. */
+    /* Middle strip: typing cat, with the last restart reason on top for a minute. */
     lv_obj_t *mid = dongle_box(screen, 0, TOP_H, SCREEN_W, MID_H, COLOR_BG);
-    lv_obj_t *name = dongle_label(mid, &lv_font_montserrat_12, COLOR_DIM);
-    lv_label_set_text(name, CONFIG_ZMK_KEYBOARD_NAME);
-    lv_obj_align(name, LV_ALIGN_CENTER, 0, 0);
+    dongle_cat_init(mid);
+    dongle_reset_reason_init(mid);
 
     lv_obj_t *bottom = dongle_box(screen, 0, TOP_H + MID_H, SCREEN_W, BOTTOM_H, COLOR_BAR);
     dongle_layer_init(bottom);
