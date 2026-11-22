@@ -111,9 +111,9 @@ Pins as written in `corne_dongle.overlay` (nRF GPIO numbers, not the silkscreen 
 | BLK (backlight) | P0.24 (driven directly, always on) |
 | VCC / GND | 3.3 V / GND |
 
-Panel settings that matter (all in the overlay, hard-won): height 128, x/y offset 0, no `rgb-is-inverted` (with it red and blue were swapped), no `inversion-on` (the theme is set in software: `COLOR_*` in `dongle_screen.h`, dark by default; if you change `COLOR_BG`, also change `BG` in `scripts/make_cat_frames.py` and rerun it), power/gamma values from the Longan Nano. The Adafruit values gave a blank white screen.
+Panel settings that matter (all in the overlay, hard-won): height 128, x/y offset 0, `madctl` 0x70 with the BGR bit (0x08) clear and no `rgb-is-inverted` (with 0x78 red and blue were swapped), no `inversion-on` (the theme is set in software: `COLOR_*` in `dongle_screen.h`, dark by default; if you change `COLOR_BG`, also change `BG` in `scripts/make_cat_frames.py` and rerun it), power/gamma values from the Longan Nano. The Adafruit values gave a blank white screen.
 
-To rotate the screen 180 degrees: press the `&rotate_screen` key (Setting layer, third key of the top row on the left half). It toggles, and resets to normal after a reboot. Implemented as LVGL software rotation in `src/dongle_screen/rotate.c`. Fallback if that misbehaves: change `madctl` in the overlay from `0x78` to `0xB8` and reflash.
+To rotate the screen 180 degrees: press the `&rotate_screen` key (Setting layer, third key of the top row on the left half). It toggles, and resets to normal after a reboot. Implemented as LVGL software rotation in `src/dongle_screen/rotate.c`. Fallback if that misbehaves: change `madctl` in the overlay from `0x70` to `0xB0` and reflash.
 
 ### RGB on the halves
 

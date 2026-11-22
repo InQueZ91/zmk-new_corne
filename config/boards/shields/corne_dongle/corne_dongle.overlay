@@ -131,7 +131,9 @@
  * Tune on hardware if needed:
  *   - wrong position / garbage edge  -> x-offset / y-offset (and caset/raset)
  *   - mirrored / rotated             -> madctl
- *   - red and blue swapped           -> toggle rgb-is-inverted (currently OFF)
+ *   - red and blue swapped           -> flip the BGR bit (0x08) of madctl. Keep
+ *                                       rgb-is-inverted OFF when the bit is clear, ON when it is set
+ *                                       (the driver only reports the pixel format from them)
  *   - colours look negative          -> inversion-on (keep it OFF: the light theme is done in software)
  * ---------------------------------------------------------------------------
  */
@@ -185,11 +187,13 @@
         height = <128>;
         x-offset = <0>;
         y-offset = <0>;
-        /* Orientation. 0x78 = normal, 0xB8 = rotated 180 degrees (flip MX+MY). */
-        madctl = <0x78>;
+        /* Orientation + colour order. 0x70 = normal, 0xB0 = rotated 180 degrees (flip MX+MY).
+         * Bit 0x08 (BGR) is CLEAR on purpose: with it set (0x78) this panel showed red and
+         * blue swapped. */
+        madctl = <0x70>;
         colmod = <0x05>;
-        /* rgb-is-inverted removed: with it red and blue were swapped on screen
-         * (blue text showed orange, red showed blue). Put it back if they swap again. */
+        /* No rgb-is-inverted: with BGR clear in madctl the driver then reports RGB_565,
+         * which is what LVGL expects. */
 
         caset = [00 00 00 9f];
         raset = [00 00 00 7f];
