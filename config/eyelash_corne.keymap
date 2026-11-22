@@ -29,6 +29,13 @@
 &soft_off { hold-time-ms = <2000>; };
 
 / {
+    /* Dongle-only: rotates the dongle's screen 180 degrees (src/dongle_screen/rotate.c). */
+    rotate_screen: rotate_screen {
+        compatible = "zmk,behavior-screen-rotate";
+        #binding-cells = <0>;
+        display-name = "Rotate screen";
+    };
+
     behaviors {
         td0: td0 {
             compatible = "zmk,behavior-tap-dance";
@@ -183,7 +190,7 @@
         setting_layer {
             display-name = "Setting";
             bindings = <
-&sys_reset       &bootloader      &none            &none            &none            &bt BT_CLR_ALL                             &mmv MOVE_UP                     &bt BT_CLR_ALL   &none            &none            &none       &bootloader                     &sys_reset
+&sys_reset       &bootloader      &rotate_screen   &none            &none            &bt BT_CLR_ALL                             &mmv MOVE_UP                     &bt BT_CLR_ALL   &none            &none            &none       &bootloader                     &sys_reset
 &rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &rgb_ug RGB_SPI  &rgb_ug RGB_SPD  &rgb_ug RGB_BRI  &rgb_ug RGB_BRD            &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &rgb_ug RGB_HUI  &rgb_ug RGB_HUD  &rgb_ug RGB_SAI  &rgb_ug RGB_SAD  &rgb_ug RGB_COLOR_HSB(0,0,100)  &rgb_ug RGB_TOG
 &out OUT_USB     &out OUT_BLE     &none            &bt BT_SEL 0     &bt BT_PRV       &bt BT_NXT       &trans                    &mmv MOVE_DOWN                   &bt BT_NXT       &bt BT_PRV       &bt BT_SEL 0     &none            &out OUT_BLE                    &out OUT_USB
                                                    &trans           &trans           &trans                                                                      &trans           &trans           &trans
