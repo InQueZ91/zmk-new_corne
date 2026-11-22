@@ -248,7 +248,7 @@ layers:
   Setting:
   - {t: '$$mdi:backup-restore$$', type: bootloader}
   - $$mdi:progress-download$$
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - '&rotate_screen'
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - BT CLR ALL
