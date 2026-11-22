@@ -132,7 +132,7 @@
  *   - wrong position / garbage edge  -> x-offset / y-offset (and caset/raset)
  *   - mirrored / rotated             -> madctl
  *   - red and blue swapped           -> rgb-is-inverted
- *   - colours look negative          -> toggle inversion-on (currently ON, on purpose)
+ *   - colours look negative          -> inversion-on (keep it OFF: the light theme is done in software)
  * ---------------------------------------------------------------------------
  */
 
@@ -185,10 +185,10 @@
         height = <128>;
         x-offset = <0>;
         y-offset = <0>;
+        /* Orientation. 0x78 = normal, 0xB8 = rotated 180 degrees (flip MX+MY). */
         madctl = <0x78>;
         colmod = <0x05>;
         rgb-is-inverted;
-        inversion-on; /* panel colour inversion (INVON): whole screen shown as a negative */
 
         caset = [00 00 00 9f];
         raset = [00 00 00 7f];

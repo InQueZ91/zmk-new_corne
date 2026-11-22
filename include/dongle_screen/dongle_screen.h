@@ -22,10 +22,11 @@
 #define MID_H 84
 #define BOTTOM_H (SCREEN_H - TOP_H - MID_H)
 
-#define COLOR_BG 0x101219
-#define COLOR_BAR 0x1C2030
-#define COLOR_TEXT 0xE6E8EE
-#define COLOR_DIM 0x5A6070
+/* Light theme: neutrals are the dark theme's inverted; accent colours stay true. */
+#define COLOR_BG 0xEFEDE6
+#define COLOR_BAR 0xE3DFCF
+#define COLOR_TEXT 0x191711
+#define COLOR_DIM 0xA59F8F
 #define COLOR_GOOD 0x5CD67A
 #define COLOR_WARN 0xFFB347
 #define COLOR_BAD 0xFF5C5C

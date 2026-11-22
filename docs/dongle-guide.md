@@ -111,7 +111,9 @@ Pins as written in `corne_dongle.overlay` (nRF GPIO numbers, not the silkscreen 
 | BLK (backlight) | P0.24 (driven directly, always on) |
 | VCC / GND | 3.3 V / GND |
 
-Panel settings that matter (all in the overlay, hard-won): height 128, x/y offset 0, `rgb-is-inverted` set, `inversion-on` set (colours deliberately shown as a negative; remove it to go back to normal), power/gamma values from the Longan Nano. The Adafruit values gave a blank white screen.
+Panel settings that matter (all in the overlay, hard-won): height 128, x/y offset 0, `rgb-is-inverted` set, no `inversion-on` (the light theme is done in software: `COLOR_*` in `dongle_screen.h`; panel inversion would turn blue into orange), power/gamma values from the Longan Nano. The Adafruit values gave a blank white screen.
+
+To rotate the screen 180 degrees, change `madctl` in the overlay from `0x78` to `0xB8` and reflash the dongle.
 
 ### RGB on the halves
 
