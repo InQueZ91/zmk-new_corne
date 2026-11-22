@@ -10,9 +10,8 @@
  *
  * How left/right is known: ZMK numbers the halves by connection order (slot 0/1),
  * not by side. Every key press carries its slot (event->source) and its key
- * position; positions on the left half are listed in LEFT_POSITIONS. The first key
+ * position; which positions are on the left half: DONGLE_LEFT_POSITIONS. The first key
  * press after boot fixes the mapping. Until then slot 0 is shown as L (a guess).
- * Positions on the left half: DONGLE_LEFT_POSITIONS in dongle_screen.h.
  */
 #include <stdio.h>
 #include <string.h>
@@ -26,12 +25,10 @@
 #include <dongle_screen/dongle_screen.h>
 
 #define HALVES 2
-#define SIDE_LEFT 0
-#define SIDE_RIGHT 1
 
-/* side_of_slot[slot] = SIDE_LEFT / SIDE_RIGHT. Written from the event thread,
+/* side_of_slot[slot] = DONGLE_SIDE_LEFT / DONGLE_SIDE_RIGHT. Written from the event thread,
  * read on the display queue; single bytes, so no tearing. */
-static volatile uint8_t side_of_slot[HALVES] = {SIDE_LEFT, SIDE_RIGHT};
+static volatile uint8_t side_of_slot[HALVES] = {DONGLE_SIDE_LEFT, DONGLE_SIDE_RIGHT};
 
 struct half_widget {
     lv_obj_t *name;
@@ -119,7 +116,7 @@ static int side_listener_cb(const zmk_event_t *eh) {
         return ZMK_EV_EVENT_BUBBLE;
     }
 
-    uint8_t side = dongle_position_is_left(ev->position) ? SIDE_LEFT : SIDE_RIGHT;
+    uint8_t side = dongle_position_side(ev->position);
     if (side_of_slot[ev->source] != side) {
         side_of_slot[ev->source] = side;
         side_of_slot[1 - ev->source] = 1 - side;
@@ -158,8 +155,8 @@ static void create_half(struct half_widget *w, lv_obj_t *parent, lv_coord_t x, c
 }
 
 void dongle_halves_init(lv_obj_t *top_bar) {
-    create_half(&halves[SIDE_LEFT], top_bar, 30, "L");
-    create_half(&halves[SIDE_RIGHT], top_bar, 96, "R");
+    create_half(&halves[DONGLE_SIDE_LEFT], top_bar, 30, "L");
+    create_half(&halves[DONGLE_SIDE_RIGHT], top_bar, 96, "R");
     halves_ready = true;
     w_halves_init();
 }

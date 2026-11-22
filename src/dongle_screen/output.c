@@ -3,6 +3,7 @@
  *   USB icon      white = PC has the keyboard, grey = USB powered but not ready
  *   BT icon + n   blue  = BLE profile n connected, amber = not connected
  */
+#include <stdio.h>
 #include <zephyr/kernel.h>
 #include <zmk/display.h>
 #include <zmk/event_manager.h>

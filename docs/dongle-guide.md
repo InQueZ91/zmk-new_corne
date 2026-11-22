@@ -111,7 +111,11 @@ Pins as written in `corne_dongle.overlay` (nRF GPIO numbers, not the silkscreen 
 | BLK (backlight) | P0.24 (driven directly, always on) |
 | VCC / GND | 3.3 V / GND |
 
-Panel settings that matter (all in the overlay, hard-won): height 128, x/y offset 0, `rgb-is-inverted` set, no `inversion-on`, power/gamma values from the Longan Nano. The Adafruit values gave a blank white screen.
+Panel settings that matter (all in the overlay, hard-won): height 128, x/y offset 0, `rgb-is-inverted` set, `inversion-on` set (colours deliberately shown as a negative; remove it to go back to normal), power/gamma values from the Longan Nano. The Adafruit values gave a blank white screen.
+
+### RGB on the halves
+
+The halves' LEDs are controlled by `&rgb_ug` keys, which the dongle handles and forwards over Bluetooth. For that the dongle needs RGB underglow compiled in, so it carries a one-LED dummy strip on P1.15 (nothing connected; see the overlay) and `CONFIG_ZMK_RGB_UNDERGLOW_EXT_POWER=n` so it never switches the ext-power rail that feeds the display. Untested on hardware: if RGB keys still do nothing, check the build log for the underglow symbols first.
 
 ## 7. Going back to standalone (no dongle)
 

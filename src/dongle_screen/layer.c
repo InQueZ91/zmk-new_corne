@@ -13,8 +13,8 @@
 #include <dongle_screen/dongle_screen.h>
 
 /* Colours by layer index: QWERTY, Game, 12#?, NavPad, Mouse&Fn, Setting */
-static const uint32_t layer_colors[] = {0x4DA3FF, 0xFF5C5C, 0x5CD67A,
-                                        0xFFB347, 0xB07CFF, 0xE6E8EE};
+static const uint32_t layer_colors[] = {COLOR_BLE,  COLOR_BAD,    COLOR_GOOD,
+                                        COLOR_WARN, COLOR_VIOLET, COLOR_TEXT};
 
 static lv_obj_t *layer_stripe;
 static lv_obj_t *layer_label;

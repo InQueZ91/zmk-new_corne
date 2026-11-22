@@ -30,6 +30,7 @@
 #define COLOR_WARN 0xFFB347
 #define COLOR_BAD 0xFF5C5C
 #define COLOR_BLE 0x4DA3FF
+#define COLOR_VIOLET 0xB07CFF
 
 /* A plain rectangle: no theme styles, no border, no padding, not scrollable. */
 static inline lv_obj_t *dongle_box(lv_obj_t *parent, lv_coord_t x, lv_coord_t y, lv_coord_t w,
@@ -62,6 +63,13 @@ static inline lv_obj_t *dongle_label(lv_obj_t *parent, const lv_font_t *font, ui
 
 static inline bool dongle_position_is_left(uint32_t position) {
     return position < DONGLE_POSITION_COUNT && ((DONGLE_LEFT_POSITIONS >> position) & 1ULL);
+}
+
+/* Which half a key position belongs to. Also indexes per-side arrays. */
+enum dongle_side { DONGLE_SIDE_LEFT, DONGLE_SIDE_RIGHT };
+
+static inline enum dongle_side dongle_position_side(uint32_t position) {
+    return dongle_position_is_left(position) ? DONGLE_SIDE_LEFT : DONGLE_SIDE_RIGHT;
 }
 
 void dongle_output_init(lv_obj_t *top_bar);

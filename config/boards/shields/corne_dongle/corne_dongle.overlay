@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <dt-bindings/led/led.h>
 #include <dt-bindings/zmk/matrix_transform.h>
 
 /*
@@ -62,6 +63,56 @@
         triggers-per-rotation = <20>;
         sensors = <&dongle_encoder>;
     };
+
+    chosen {
+        /* Dummy strip, see "Dummy underglow" below. */
+        zmk,underglow = &led_strip;
+    };
+};
+
+/*
+ * ---------------------------------------------------------------------------
+ * Dummy underglow (nothing is connected)
+ *
+ * &rgb_ug key presses are handled by the dongle, which then forwards them to
+ * the halves. It can only do that if it knows the behavior, and ZMK only builds
+ * RGB underglow when a strip is defined. So the dongle gets a one-LED strip on
+ * a free pin (P1.15) on SPIM3; the real LEDs live on the halves.
+ * CONFIG_ZMK_RGB_UNDERGLOW_EXT_POWER=n in corne_dongle.conf keeps this strip
+ * from switching the ext-power rail, which also powers the display.
+ * ---------------------------------------------------------------------------
+ */
+&pinctrl {
+    spi3_default: spi3_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 1, 15)>;
+        };
+    };
+
+    spi3_sleep: spi3_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 1, 15)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi3 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi3_default>;
+    pinctrl-1 = <&spi3_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    led_strip: ws2812@0 {
+        compatible = "worldsemi,ws2812-spi";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        chain-length = <1>;
+        spi-one-frame = <0x70>;
+        spi-zero-frame = <0x40>;
+        color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
+    };
 };
 
 /*
@@ -81,7 +132,7 @@
  *   - wrong position / garbage edge  -> x-offset / y-offset (and caset/raset)
  *   - mirrored / rotated             -> madctl
  *   - red and blue swapped           -> rgb-is-inverted
- *   - colours look negative          -> inversion-on
+ *   - colours look negative          -> toggle inversion-on (currently ON, on purpose)
  * ---------------------------------------------------------------------------
  */
 
@@ -137,6 +188,7 @@
         madctl = <0x78>;
         colmod = <0x05>;
         rgb-is-inverted;
+        inversion-on; /* panel colour inversion (INVON): whole screen shown as a negative */
 
         caset = [00 00 00 9f];
         raset = [00 00 00 7f];
