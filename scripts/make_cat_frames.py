@@ -22,7 +22,7 @@ import sys
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BG = (0xEF, 0xED, 0xE6)          # COLOR_BG of the screen (dongle_screen.h)
+BG = (0x10, 0x12, 0x19)          # COLOR_BG of the screen (dongle_screen.h)
 LIFT = 5                         # pixels a lifted hand moves up
 HAND_TOP = 69                    # rows from here down belong to the hands / forearms
 SPLIT = 80                       # x < SPLIT is the left half of the picture
