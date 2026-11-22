@@ -131,7 +131,7 @@
  * Tune on hardware if needed:
  *   - wrong position / garbage edge  -> x-offset / y-offset (and caset/raset)
  *   - mirrored / rotated             -> madctl
- *   - red and blue swapped           -> rgb-is-inverted
+ *   - red and blue swapped           -> toggle rgb-is-inverted (currently OFF)
  *   - colours look negative          -> inversion-on (keep it OFF: the light theme is done in software)
  * ---------------------------------------------------------------------------
  */
@@ -188,7 +188,8 @@
         /* Orientation. 0x78 = normal, 0xB8 = rotated 180 degrees (flip MX+MY). */
         madctl = <0x78>;
         colmod = <0x05>;
-        rgb-is-inverted;
+        /* rgb-is-inverted removed: with it red and blue were swapped on screen
+         * (blue text showed orange, red showed blue). Put it back if they swap again. */
 
         caset = [00 00 00 9f];
         raset = [00 00 00 7f];
